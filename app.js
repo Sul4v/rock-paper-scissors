@@ -7,6 +7,7 @@ const result_p = document.querySelector(".result > p");
 const rock_div = document.querySelector("#r");
 const paper_div = document.querySelector("#p");
 const scissors_div = document.querySelector("#s");
+const restart_div = document.querySelector("#restart_btn");
 
 
 function getComputerChoice(){
@@ -22,32 +23,38 @@ function convertWord(letter){
 }
 
 function win(userChoice, computerChoice){
+  const smallUserWord = "user".fontsize(3).sub();
+  const smallCompWord = "comp".fontsize(3).sub();
+  const userChoice_div = document.getElementById(userChoice);
   userScore++;
   userScore_span.innerHTML = userScore;
   computerScore_span.innerHTML = computerScore;
-  const smallUserWord = "user".fontsize(3).sub();
-  const smallCompWord = "comp".fontsize(3).sub();
   result_p.innerHTML = `${convertWord(userChoice)}${smallUserWord} beats ${convertWord(computerChoice)}${smallCompWord}. You Win!!`;
-  document.querySelector("#"+userChoice).classList.add("green-glow");
-  setTimeout(function(){console.log("hello")}, 3000);
+  userChoice_div.classList.add("green-glow");
+  setTimeout(function(){userChoice_div.classList.remove("green-glow")}, 500);
 }
 
-setTimeout(function(){console.log("hello")}, 3000);
 
 function lose(userChoice, computerChoice){
+  const smallUserWord = "user".fontsize(3).sub();
+  const smallCompWord = "comp".fontsize(3).sub();
+  const userChoice_div = document.getElementById(userChoice);
   computerScore++;
   userScore_span.innerHTML = userScore;
   computerScore_span.innerHTML = computerScore;
-  const smallUserWord = "user".fontsize(3).sub();
-  const smallCompWord = "comp".fontsize(3).sub();
-  result_p.innerHTML = `${convertWord(userChoice)}${smallUserWord} loses to ${convertWord(computerChoice)}${smallCompWord}. You Lost bruh!!`;
-
+  result_p.innerHTML = `${convertWord(userChoice)}${smallUserWord} loses to ${convertWord(computerChoice)}${smallCompWord}. You Lost!!`;
+  userChoice_div.classList.add("red-glow");
+  setTimeout(function(){userChoice_div.classList.remove("red-glow")}, 500);
 }
 
 function draw(userChoice, compChoice){
+  const userChoice_div = document.getElementById(userChoice);
   const smallUserWord = "user".fontsize(3).sub();
   const smallCompWord = "comp".fontsize(3).sub();
   result_p.innerHTML = `It's draw!!`;
+  userChoice_div.classList.add("grey-glow");
+  setTimeout(function(){userChoice_div.classList.remove("grey-glow")}, 500);
+
 }
 
 function game(userChoice){
@@ -71,6 +78,14 @@ function game(userChoice){
   }
 }
 
+function restart(){
+  userScore = 0;
+  computerScore = 0;
+  userScore_span.innerHTML = userScore;
+  computerScore_span.innerHTML = computerScore;
+  result_p.innerHTML = "Baby One More Time!!";
+}
+
 function main(){
     rock_div.addEventListener("click", function(){
       game("r");
@@ -83,6 +98,11 @@ function main(){
     scissors_div.addEventListener("click", function(){
       game("s");
     })
+
+    restart_div.addEventListener("click", function(){
+      restart();
+    })
+
 }
 
 main();
